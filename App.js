@@ -6,12 +6,11 @@ import {
   View,
   Text,
   StatusBar,
-  Button,
+  Pressable,
   NativeModules,
 } from 'react-native';
 
 import {
-  Header,
   LearnMoreLinks,
   Colors,
   DebugInstructions,
@@ -21,25 +20,6 @@ import {
 const App = () => {
   return (
     <>
-      {__DEV__ && (
-        <View
-          style={{
-            position: 'absolute',
-            right: 30,
-            bottom: 20,
-            backgroundColor: 'gray',
-            borderRadius: 10,
-          }}>
-          <Button
-            title="Dev"
-            color="white"
-            onPress={() => {
-              NativeModules.DevMenu.show();
-            }}
-            accessibilityLabel="developer menu shortcut"
-          />
-        </View>
-      )}
       <StatusBar barStyle="dark-content" />
       <SafeAreaView>
         <ScrollView
@@ -75,17 +55,39 @@ const App = () => {
           </View>
         </ScrollView>
       </SafeAreaView>
+      <Developer />
     </>
   );
 };
 
+let devMode = __DEV__;
+// devMode = false;
+
+const Developer = () =>
+  devMode && (
+    <Pressable
+      onPress={() => {
+        NativeModules.DevMenu.show();
+      }}
+      style={styles.developer}>
+      <Text style={styles.devButtonText}>👨‍💻</Text>
+    </Pressable>
+  );
+
 const styles = StyleSheet.create({
+  developer: {
+    position: 'absolute',
+    right: 30,
+    bottom: 50,
+    padding: 20,
+    backgroundColor: '#0083ff',
+    opacity: 0.8,
+    borderRadius: 10,
+    fontWeight: 'bold',
+  },
+  devButtonText: {color: 'white', fontSize: 20},
   scrollView: {
     backgroundColor: 'white',
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
   },
   body: {
     backgroundColor: 'white',
